@@ -19,7 +19,7 @@ const PLATFORMS = [
 
 export function DownloadSection() {
   return (
-    <section id="download" className="relative scroll-mt-16 bg-background pb-28 pt-32">
+    <section id="download" className="relative scroll-mt-16 overflow-hidden bg-background pb-28 pt-32">
       <div
         aria-hidden="true"
         className="absolute inset-x-0 top-0 h-20 bg-primary [clip-path:polygon(0_0,100%_0,100%_35%,0_100%)] sm:h-28"
