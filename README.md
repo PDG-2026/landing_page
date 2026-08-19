@@ -1,11 +1,10 @@
-# landing_page
+# Landing Page
+
 > Repository containing the landing page of the project. This page is meant to briefly present the project as well as redirect the user to a download page.
 
-## VaultKey landing page
+## Keypr landing page
 
-Next.js (App Router) + TypeScript + Tailwind CSS single-page site, with Motion for
-scroll/entrance animations, react-three-fiber + drei for the hero's procedural 3D key, and
-GSAP ScrollTrigger for the scroll-stacking feature cards.
+This landing page is built using [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/). It is currently deployed using Github Pages, but can be deployed on any static hosting service.
 
 ### Run locally
 
@@ -17,16 +16,13 @@ npm run dev
 Then open http://localhost:3000. `npm run build` produces the production build,
 `npm run lint` runs ESLint.
 
-### Swapping placeholder links
-
-All external links live in `lib/constants.ts`:
-
-- `GITHUB_URL` — the real VaultKey repository (also drives the per-OS release download URLs).
-- `EXTENSION_URL` — the real browser extension store listing.
-
 ### Structure
 
-- `app/layout.tsx` — fonts, metadata, root shell.
-- `app/page.tsx` — composes the page sections.
-- `components/` — `Navbar`, `Hero`, `KeyScene` (r3f canvas), `BentoGrid`, `WhySection` /
+- `app/layout.tsx` : fonts, metadata, root shell.
+- `app/page.tsx` : composes the page sections.
+- `components/` : `Navbar`, `Hero`, `KeyScene`, `BentoGrid`, `WhySection` /
   `StackCard`, `DownloadSection`, `Footer`.
+- `lib`: `constants.ts` : links to be modified for deployment.
+
+
+> **Note:** The landing page has been fully designed, developped and thought by the team. However, we've used Claude AI to help us write the code related to animations, GSAP, and Three.js.
