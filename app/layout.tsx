@@ -43,7 +43,7 @@ export const metadata: Metadata = {
       "Zero-knowledge encryption, disposable identities, and a vault that never sees your secrets in the clear.",
   },
   icons: {
-    icon: "/icons/pdg_logo.png",
+    icon: "/landing_page/icons/pdg_logo.png",
   },
 };
 
