@@ -24,5 +24,6 @@ Then open http://localhost:3000. `npm run build` produces the production build,
   `StackCard`, `DownloadSection`, `Footer`.
 - `lib`: `constants.ts` : links to be modified for deployment.
 
+---
 
 > **Note:** The landing page has been fully designed, developped and thought by the team. However, we've used Claude AI to help us write the code related to animations, GSAP, and Three.js.
