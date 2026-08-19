@@ -113,7 +113,7 @@ export function WhySection() {
 
   return (
     <section id="security" className="relative bg-background pt-20">
-      <div ref={wrapperRef} id="how-it-works" className="relative">
+      <div ref={wrapperRef} className="relative">
         <div className="-mt-9">
           {CARDS.map((card) => (
             <StackCard key={card.number} {...card} />

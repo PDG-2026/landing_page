@@ -114,8 +114,7 @@ export function BentoGrid() {
         <div className="relative z-10">
           <h3 className="font-display text-lg font-semibold text-foreground">Multiple vaults</h3>
           <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted">
-            Split logins, cards, and wifi credentials into separate vaults, organized by category
-            or shared with people you trust.
+            Split logins, cards, and wifi credentials into separate vaults, organized by category.
           </p>
         </div>
       </div>

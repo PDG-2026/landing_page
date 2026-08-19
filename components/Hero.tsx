@@ -40,8 +40,7 @@ export function Hero() {
             transition={{ duration: 0.7, delay: 0.1, ease: easeOut }}
             className="mx-auto mt-5 max-w-xl text-balance text-base leading-relaxed text-muted md:text-lg"
           >
-            Keypr encrypts every password, card, and identity on your device before it ever
-            touches a server, so no one but you can read your vault.
+            Keypr encrypts every password, card, and identity on your device so no one but you can read your vaults. Your information never leaves your device.
           </motion.p>
 
           <motion.div

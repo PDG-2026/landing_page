@@ -12,6 +12,6 @@ export const DOWNLOAD_LINKS = {
 export const NAV_LINKS = [
   { label: "Features", href: "#features" },
   { label: "Security", href: "#security" },
-  { label: "How it works", href: "#how-it-works" },
+  { label: "Showcase", href: "#showcase" },
   { label: "Download", href: "#download" },
 ] as const;
