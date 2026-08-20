@@ -24,10 +24,15 @@ type Frame = {
   src: string;
   alt: string;
   label: string;
+};
+
+/** Resting 3D pose for a frame placed on the desktop stage. */
+type StagePose = {
+  /** Index into ALL_FRAMES. */
+  frameIndex: number;
   /** Anchor point of the frame center, in % of the stage. */
   top: string;
   left: string;
-  /** Resting 3D pose. */
   z: number;
   rotateX: number;
   rotateY: number;
@@ -39,11 +44,77 @@ type Frame = {
   width: string;
 };
 
-const FRAMES: Frame[] = [
+const ALL_FRAMES: Frame[] = [
+  {
+    src: "/landing_page/mockups/master-password-unlock.svg",
+    alt: "Master password unlock screen",
+    label: "Unlock",
+  },
   {
     src: "/landing_page/mockups/vault-list.svg",
     alt: "Vault list screen showing categorized encrypted entries",
-    label: "Vault",
+    label: "Vaults",
+  },
+  {
+    src: "/landing_page/mockups/create-vault-modal.svg",
+    alt: "Create vault modal for organizing a new encrypted vault",
+    label: "New vault",
+  },
+  {
+    src: "/landing_page/mockups/unlocked-vault-detail-entries.svg",
+    alt: "Unlocked vault detail screen listing every credential entry",
+    label: "Vault entries",
+  },
+  {
+    src: "/landing_page/mockups/unlocked-vault-detail-website.svg",
+    alt: "Unlocked vault detail screen showing a website login entry",
+    label: "Website entry",
+  },
+  {
+    src: "/landing_page/mockups/unlocked-vault-detail-add-website.svg",
+    alt: "Form for adding a new website login entry to a vault",
+    label: "Add website",
+  },
+  {
+    src: "/landing_page/mockups/unlocked-vault-detail-credit-card.svg",
+    alt: "Unlocked vault detail screen showing a credit card entry",
+    label: "Card entry",
+  },
+  {
+    src: "/landing_page/mockups/unlocked-vault-detail-add-credit-card.svg",
+    alt: "Form for adding a new credit card entry to a vault",
+    label: "Add card",
+  },
+  {
+    src: "/landing_page/mockups/unlocked-vault-detail-wifi.svg",
+    alt: "Unlocked vault detail screen showing a Wi-Fi network entry",
+    label: "Wi-Fi entry",
+  },
+  {
+    src: "/landing_page/mockups/unlocked-vault-detail-add-wifi.svg",
+    alt: "Form for adding a new Wi-Fi network entry to a vault",
+    label: "Add Wi-Fi",
+  },
+  {
+    src: "/landing_page/mockups/unlocked-vault-password-generator.svg",
+    alt: "Password generator screen for creating strong new credentials",
+    label: "Password generator",
+  },
+  {
+    src: "/landing_page/mockups/personas-manager.svg",
+    alt: "Personas manager screen listing generated identities",
+    label: "Personas",
+  },
+  {
+    src: "/landing_page/mockups/create-persona-form.svg",
+    alt: "Create persona form for generating a fictional identity",
+    label: "New persona",
+  },
+];
+
+const STAGE_POSES: StagePose[] = [
+  {
+    frameIndex: 1,
     top: "54%",
     left: "50%",
     z: 90,
@@ -57,9 +128,7 @@ const FRAMES: Frame[] = [
     width: "min(30vw, 400px)",
   },
   {
-    src: "/landing_page/mockups/create-vault-modal.svg",
-    alt: "Create vault modal for organizing a new encrypted vault",
-    label: "New vault",
+    frameIndex: 2,
     top: "84%",
     left: "16%",
     z: -100,
@@ -73,9 +142,7 @@ const FRAMES: Frame[] = [
     width: "min(20vw, 260px)",
   },
   {
-    src: "/landing_page/mockups/master-password-unlock.svg",
-    alt: "Master password unlock screen",
-    label: "Unlock",
+    frameIndex: 0,
     top: "18%",
     left: "84%",
     z: -100,
@@ -89,9 +156,7 @@ const FRAMES: Frame[] = [
     width: "min(20vw, 260px)",
   },
   {
-    src: "/landing_page/mockups/unlocked-vault-detail.svg",
-    alt: "Unlocked vault detail screen with credential fields revealed",
-    label: "Vault detail",
+    frameIndex: 3,
     top: "24%",
     left: "20%",
     z: 10,
@@ -105,9 +170,7 @@ const FRAMES: Frame[] = [
     width: "min(24vw, 320px)",
   },
   {
-    src: "/landing_page/mockups/personas-manager.svg",
-    alt: "Personas manager screen listing generated identities",
-    label: "Personas",
+    frameIndex: 11,
     top: "76%",
     left: "80%",
     z: 10,
@@ -119,22 +182,6 @@ const FRAMES: Frame[] = [
     zIndex: 50,
     delay: 0.16,
     width: "min(24vw, 320px)",
-  },
-  {
-    src: "/landing_page/mockups/create-persona-form.svg",
-    alt: "Create persona form for generating a fictional identity",
-    label: "New persona",
-    top: "26%",
-    left: "50%",
-    z: -190,
-    rotateX: 6,
-    rotateY: 0,
-    scale: 0.58,
-    opacity: 0.5,
-    blur: 2.5,
-    zIndex: 10,
-    delay: 0.4,
-    width: "min(22vw, 300px)",
   },
 ];
 
@@ -179,8 +226,9 @@ export function ShowcaseSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   const showPrev = () =>
-    setActiveIndex((i) => (i === null ? null : (i - 1 + FRAMES.length) % FRAMES.length));
-  const showNext = () => setActiveIndex((i) => (i === null ? null : (i + 1) % FRAMES.length));
+    setActiveIndex((i) => (i === null ? null : (i - 1 + ALL_FRAMES.length) % ALL_FRAMES.length));
+  const showNext = () =>
+    setActiveIndex((i) => (i === null ? null : (i + 1) % ALL_FRAMES.length));
   const close = () => setActiveIndex(null);
 
   useEffect(() => {
@@ -227,26 +275,26 @@ export function ShowcaseSection() {
     const ctx = gsap.context(() => {
       frameRefs.current.forEach((el, i) => {
         if (!el) return;
-        const frame = FRAMES[i];
+        const pose = STAGE_POSES[i];
 
         gsap.set(el, {
           xPercent: -50,
           yPercent: -50,
-          z: frame.z,
-          rotationX: frame.rotateX,
-          rotationY: frame.rotateY,
-          scale: reduce ? frame.scale : frame.scale * 0.86,
-          opacity: reduce ? frame.opacity : 0,
-          filter: `blur(${frame.blur}px)`,
+          z: pose.z,
+          rotationX: pose.rotateX,
+          rotationY: pose.rotateY,
+          scale: reduce ? pose.scale : pose.scale * 0.86,
+          opacity: reduce ? pose.opacity : 0,
+          filter: `blur(${pose.blur}px)`,
         });
 
         if (reduce) return;
 
         gsap.to(el, {
-          opacity: frame.opacity,
-          scale: frame.scale,
+          opacity: pose.opacity,
+          scale: pose.scale,
           duration: 1.2,
-          delay: frame.delay,
+          delay: pose.delay,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -284,7 +332,7 @@ export function ShowcaseSection() {
             The vault, from every angle
           </h2>
           <p className="mt-4 text-balance text-base leading-relaxed text-muted">
-            Six real screens from the app: unlocking, browsing, and building personas, all
+            Real screens from the app: unlocking, browsing vaults, and building personas, all
             without your data ever leaving the encrypted vault.
           </p>
         </motion.div>
@@ -304,34 +352,37 @@ export function ShowcaseSection() {
               rotateY: reduce ? 0 : rotateY,
             }}
           >
-            {FRAMES.map((frame, i) => (
-              <div
-                key={frame.label}
-                ref={(el) => {
-                  frameRefs.current[i] = el;
-                }}
-                className="absolute"
-                style={{
-                  top: frame.top,
-                  left: frame.left,
-                  width: frame.width,
-                  zIndex: frame.zIndex,
-                  transformStyle: "preserve-3d",
-                }}
-              >
-                <FrameChrome
-                  src={frame.src}
-                  alt={frame.alt}
-                  label={frame.label}
-                  onOpen={() => setActiveIndex(i)}
-                />
-              </div>
-            ))}
+            {STAGE_POSES.map((pose, i) => {
+              const frame = ALL_FRAMES[pose.frameIndex];
+              return (
+                <div
+                  key={frame.label}
+                  ref={(el) => {
+                    frameRefs.current[i] = el;
+                  }}
+                  className="absolute"
+                  style={{
+                    top: pose.top,
+                    left: pose.left,
+                    width: pose.width,
+                    zIndex: pose.zIndex,
+                    transformStyle: "preserve-3d",
+                  }}
+                >
+                  <FrameChrome
+                    src={frame.src}
+                    alt={frame.alt}
+                    label={frame.label}
+                    onOpen={() => setActiveIndex(pose.frameIndex)}
+                  />
+                </div>
+              );
+            })}
           </motion.div>
         </div>
 
         <div className="-mx-4 mt-14 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 lg:hidden">
-          {FRAMES.map((frame, i) => (
+          {ALL_FRAMES.map((frame, i) => (
             <div
               key={frame.label}
               className="w-[78vw] shrink-0 snap-center sm:w-[420px]"
@@ -406,8 +457,8 @@ export function ShowcaseSection() {
               </div>
               <div className="relative aspect-[1440/1024] w-full">
                 <Image
-                  src={FRAMES[activeIndex].src}
-                  alt={FRAMES[activeIndex].alt}
+                  src={ALL_FRAMES[activeIndex].src}
+                  alt={ALL_FRAMES[activeIndex].alt}
                   fill
                   sizes="90vw"
                   className="object-cover object-top"
@@ -417,10 +468,10 @@ export function ShowcaseSection() {
               <div className="flex items-center gap-2 border-t border-white/10 px-4 py-3">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                 <span className="font-display text-sm font-medium tracking-wide text-foreground">
-                  {FRAMES[activeIndex].label}
+                  {ALL_FRAMES[activeIndex].label}
                 </span>
                 <span className="ml-auto text-xs text-muted">
-                  {activeIndex + 1} / {FRAMES.length}
+                  {activeIndex + 1} / {ALL_FRAMES.length}
                 </span>
               </div>
             </motion.div>
